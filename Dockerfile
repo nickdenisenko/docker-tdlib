@@ -1,6 +1,7 @@
 FROM debian:bookworm AS builder
 
-ENV TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2 # 2025-07-10
+# https://github.com/tdlib/td/commit/0ece11a1ae5aa514a76a459f4904276494434bd2
+ENV TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2
 ENV TD_VERSION=1.8.51
 
 RUN set -eux; \
