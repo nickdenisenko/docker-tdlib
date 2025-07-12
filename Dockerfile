@@ -1,8 +1,8 @@
 FROM debian:bookworm AS builder
 
 # https://github.com/tdlib/td/commit/0ece11a1ae5aa514a76a459f4904276494434bd2
-ENV TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2
-ENV TD_VERSION=1.8.51
+ARG TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2
+ARG TD_VERSION=1.8.51
 
 RUN set -eux; \
 	apt-get update; \
@@ -34,6 +34,9 @@ RUN set -eux; \
 FROM debian:bookworm
 
 COPY --from=builder /usr/local/lib/libtdjson.so /usr/local/lib/libtdjson.so
-COPY --from=builder /usr/local/lib/libtdjson.so.$TD_VERSION /usr/local/lib/libtdjson.so.$TD_VERSION
+COPY --from=builder /usr/local/lib/libtdjson.so.${TD_VERSION} /usr/local/lib/libtdjson.so.${TD_VERSION}
+
+# FIXME: remove
+RUN ls -l /usr/local/lib
 
 RUN ldconfig
