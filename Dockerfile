@@ -9,6 +9,7 @@ RUN set -eux; \
 	apt-get install -y --no-install-recommends \
 		git \
 		make \
+    ca-certificates \
     clang \
     cmake \
     gperf \
