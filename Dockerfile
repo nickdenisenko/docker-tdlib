@@ -35,6 +35,5 @@ FROM debian:bookworm
 
 COPY --from=builder /usr/local/lib/libtdjson.so /usr/local/lib/libtdjson.so
 COPY --from=builder /usr/local/lib/libtdjson.so.$TD_VERSION /usr/local/lib/libtdjson.so.$TD_VERSION
-COPY --from=builder /usr/local/include/td/td_json_client.h /usr/local/include/td/td_json_client.h
 
 RUN ldconfig
