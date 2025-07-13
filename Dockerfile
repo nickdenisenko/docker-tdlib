@@ -1,13 +1,14 @@
 FROM debian:bookworm AS builder
 
-ENV TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2 # 2025-07-10
-ENV TD_VERSION=1.8.51
+# https://github.com/tdlib/td/commit/0ece11a1ae5aa514a76a459f4904276494434bd2
+ARG TD_COMMIT=0ece11a1ae5aa514a76a459f4904276494434bd2
 
 RUN set -eux; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		git \
 		make \
+    ca-certificates \
     clang \
     cmake \
     gperf \
@@ -31,8 +32,9 @@ RUN set -eux; \
 
 FROM debian:bookworm
 
+ARG TD_VERSION=1.8.51
+
+COPY --from=builder /usr/local/lib/libtdjson.so.${TD_VERSION} /usr/local/lib/libtdjson.so.${TD_VERSION}
 COPY --from=builder /usr/local/lib/libtdjson.so /usr/local/lib/libtdjson.so
-COPY --from=builder /usr/local/lib/libtdjson.so.$TD_VERSION /usr/local/lib/libtdjson.so.$TD_VERSION
-COPY --from=builder /usr/local/include/td/td_json_client.h /usr/local/include/td/td_json_client.h
 
 RUN ldconfig
